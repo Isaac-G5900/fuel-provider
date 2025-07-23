@@ -14,16 +14,21 @@
 # Build stage, to create a Virtual Environent
 FROM python:3.11-slim-bullseye
 
-COPY . /
+# Install build dependencies
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    python3-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /app
+COPY requirements.in requirements.txt ./
 
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
-# useful dumps about feeding values
-ENV LOG_LEVEL="info,databroker=debug,mock_service=debug"
+COPY . .
 
-# Vehicle Data Broker host:port
-#ENV VDB_ADDRESS="localhost:55555"
-
+ENV LOG_LEVEL="info,databroker=debug"
 ENV PYTHONUNBUFFERED=yes
 
-ENTRYPOINT ["./mockprovider.py"]
+# Run the fuel provider service
+CMD ["fuel-provider"]

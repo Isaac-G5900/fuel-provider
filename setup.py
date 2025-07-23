@@ -18,8 +18,13 @@ PKG_VERSION = "v0.4.1"
 pkg_packages = find_packages()
 
 setup(
-    name="mock_provider",
+    name="fuel_provider",
     packages=pkg_packages,
     version=PKG_VERSION,
+    entry_points={
+        "console_scripts": [
+            "fuel-provider = fuelprovider:main",
+        ],
+    },
     classifiers=["License :: OSI Approved :: Apache Software License"],
 )

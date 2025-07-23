@@ -1,2 +1,2 @@
-scipy>=1.10.1
-kuksa_client>=0.4.3
+kuksa-client>=0.4.3
+python-obd~=0.7.0
