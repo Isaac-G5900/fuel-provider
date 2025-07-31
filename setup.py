@@ -23,7 +23,7 @@ setup(
     version=PKG_VERSION,
     entry_points={
         "console_scripts": [
-            "fuel-provider = fuelprovider:main",
+            "fuel-provider = fuelprovider:run",
         ],
     },
     classifiers=["License :: OSI Approved :: Apache Software License"],

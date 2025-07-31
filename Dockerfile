@@ -21,14 +21,20 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
-COPY requirements.in requirements.txt ./
 
+# Copy and install requirements first (better layer caching)
+COPY requirements.in requirements.txt ./
 RUN python3 -m pip install --no-cache-dir -r requirements.txt
 
+# Copy the rest of the code
 COPY . .
 
+# Install our package in development mode
+RUN pip install -e .
+
+# Environment setup
 ENV LOG_LEVEL="info,databroker=debug"
 ENV PYTHONUNBUFFERED=yes
 
-# Run the fuel provider service
+# Run the service
 CMD ["fuel-provider"]
